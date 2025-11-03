@@ -158,6 +158,7 @@
             this.SaveQuestion.TabIndex = 33;
             this.SaveQuestion.Text = "save";
             this.SaveQuestion.UseVisualStyleBackColor = false;
+            this.SaveQuestion.Click += new System.EventHandler(this.SaveQuestion_Click);
             // 
             // CancelAdd
             // 

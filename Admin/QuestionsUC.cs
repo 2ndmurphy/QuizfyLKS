@@ -101,7 +101,8 @@ namespace Quizfy_LKS.Admin
 
         private void AddQuestion_Click(object sender, EventArgs e)
         {
-
+            int subjectId = (int)SubjectCB.SelectedValue;
+            (new AddQuestionForm(subjectId)).Show();
         }
 
         private void StudentQuestionView_CellContentClick(object sender, DataGridViewCellEventArgs e)
