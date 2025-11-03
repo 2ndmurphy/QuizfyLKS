@@ -62,12 +62,8 @@ namespace Quizfy_LKS.Admin.Modals
                     // Load gambar kalau ada
                     if (!string.IsNullOrEmpty(imageFile))
                     {
-                        // /bin/Debug/net8.0-windows/Images/
+                        // /bin/Debug/ImagesQuestions/
                         string imagePath = Path.Combine(Application.StartupPath, "ImagesQuestions", imageFile);
-
-                        // Global path
-                        //string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "QuestionImages", imageFile);
-
 
                         if (File.Exists(imagePath))
                         {
@@ -134,9 +130,54 @@ namespace Quizfy_LKS.Admin.Modals
             else if (!string.IsNullOrEmpty(AnswerD.Text) && correctAnswer == AnswerD.Text) OptionD.Checked = true;
         }
 
+        private string GetSelectedAnswerText()
+        {
+            if (OptionA.Checked) return AnswerA.Text;
+            if (OptionB.Checked) return AnswerB.Text;
+            if (OptionC.Checked) return AnswerC.Text;
+            if (OptionD.Checked) return AnswerD.Text;
+            return null;
+        }
+
+
         private void EditQuestionForm_Load(object sender, EventArgs e)
         {
             LoadQuestion();
+        }
+
+        private void SaveQuestion_Click(object sender, EventArgs e)
+        {
+            string selectedText = GetSelectedAnswerText();
+            if (selectedText == null)
+            {
+                MessageBox.Show("Pilih jawaban yang benar dulu.");
+                return;
+            }
+
+            using (var _db = new DataClasses1DataContext())
+            {
+                try
+                {
+                    var question = _db.Questions.SingleOrDefault(q => q.ID == _questionId);
+                    if (question == null) return;
+
+                    question.OptionA = AnswerA.Text.Trim();
+                    question.OptionB = AnswerB.Text.Trim();
+                    question.OptionC = AnswerC.Text.Trim();
+                    question.OptionD = AnswerD.Text.Trim();
+                    question.CorrectAnswer = selectedText;
+
+                    _db.SubmitChanges();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Terjadi Kesalahan: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            MessageBox.Show("Saved!");
+            this.Refresh();
         }
     }
 }

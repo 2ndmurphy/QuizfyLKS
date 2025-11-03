@@ -130,6 +130,7 @@
             this.SaveQuestion.TabIndex = 10;
             this.SaveQuestion.Text = "save";
             this.SaveQuestion.UseVisualStyleBackColor = false;
+            this.SaveQuestion.Click += new System.EventHandler(this.SaveQuestion_Click);
             // 
             // OptionA
             // 
