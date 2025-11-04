@@ -75,6 +75,7 @@
             this.QuestionImage.Size = new System.Drawing.Size(113, 112);
             this.QuestionImage.TabIndex = 2;
             this.QuestionImage.TabStop = false;
+            this.QuestionImage.Click += new System.EventHandler(this.QuestionImage_Click);
             // 
             // label2
             // 
