@@ -48,6 +48,7 @@
             this.QuestionsImage = new System.Windows.Forms.PictureBox();
             this.QuestionBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.QuestionFileImage = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.QuestionsImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -204,11 +205,14 @@
             // 
             // QuestionsImage
             // 
+            this.QuestionsImage.Image = global::Quizfy_LKS.Properties.Resources.add_image;
             this.QuestionsImage.Location = new System.Drawing.Point(16, 112);
             this.QuestionsImage.Name = "QuestionsImage";
             this.QuestionsImage.Size = new System.Drawing.Size(113, 112);
+            this.QuestionsImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.QuestionsImage.TabIndex = 28;
             this.QuestionsImage.TabStop = false;
+            this.QuestionsImage.Click += new System.EventHandler(this.QuestionsImage_Click);
             // 
             // QuestionBox
             // 
@@ -226,6 +230,10 @@
             this.label1.Size = new System.Drawing.Size(49, 13);
             this.label1.TabIndex = 26;
             this.label1.Text = "Question";
+            // 
+            // QuestionFileImage
+            // 
+            this.QuestionFileImage.FileName = "Question File";
             // 
             // AddQuestionForm
             // 
@@ -287,5 +295,6 @@
         private System.Windows.Forms.PictureBox QuestionsImage;
         private System.Windows.Forms.TextBox QuestionBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.OpenFileDialog QuestionFileImage;
     }
 }

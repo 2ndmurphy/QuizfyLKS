@@ -175,8 +175,8 @@ namespace Quizfy_LKS.Admin.Modals
                 }
             }
 
-            MessageBox.Show("Saved!");
-            this.Refresh();
+            MessageBox.Show("Question updated succesfully", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Close();
         }
     }
 }
