@@ -103,6 +103,30 @@
     <Compile Include="RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Student\Components\SubjectCardUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Student\Components\SubjectCardUC.Designer.cs">
+      <DependentUpon>SubjectCardUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Student\DashboardUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Student\DashboardUC.Designer.cs">
+      <DependentUpon>DashboardUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Student\QuestionsUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Student\QuestionsUC.Designer.cs">
+      <DependentUpon>QuestionsUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Student\ResultsUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Student\ResultsUC.Designer.cs">
+      <DependentUpon>ResultsUC.cs</DependentUpon>
+    </Compile>
     <Compile Include="Student\StudentDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +167,18 @@
     <EmbeddedResource Include="RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Student\Components\SubjectCardUC.resx">
+      <DependentUpon>SubjectCardUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Student\DashboardUC.resx">
+      <DependentUpon>DashboardUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Student\QuestionsUC.resx">
+      <DependentUpon>QuestionsUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Student\ResultsUC.resx">
+      <DependentUpon>ResultsUC.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Student\StudentDashboard.resx">
       <DependentUpon>StudentDashboard.cs</DependentUpon>
     </EmbeddedResource>
@@ -170,9 +206,7 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Components\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\left.png" />
   </ItemGroup>

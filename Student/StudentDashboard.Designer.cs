@@ -30,26 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StudentDashboard));
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.SidebarContainer = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.GoResults = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.CollapseLeft = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.SignOut = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.GoDashboard = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.GoResults = new System.Windows.Forms.Button();
+            this.CollapseLeft = new System.Windows.Forms.Button();
+            this.SignOut = new System.Windows.Forms.Button();
+            this.GoDashboard = new System.Windows.Forms.Button();
             this.GoQuestions = new System.Windows.Forms.Button();
-            this.LabelTime = new System.Windows.Forms.Label();
-            this.LabelDate = new System.Windows.Forms.Label();
-            this.GreetLabel = new System.Windows.Forms.Label();
             this.TimerControl = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            this.PanelContainer = new System.Windows.Forms.Panel();
             this.SidebarContainer.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -57,26 +50,6 @@
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.SidebarContainer);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.LabelTime);
-            this.splitContainer1.Panel2.Controls.Add(this.LabelDate);
-            this.splitContainer1.Panel2.Controls.Add(this.GreetLabel);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 450);
-            this.splitContainer1.SplitterDistance = 169;
-            this.splitContainer1.SplitterWidth = 1;
-            this.splitContainer1.TabIndex = 0;
             // 
             // SidebarContainer
             // 
@@ -92,7 +65,7 @@
             this.SidebarContainer.MinimumSize = new System.Drawing.Size(51, 450);
             this.SidebarContainer.Name = "SidebarContainer";
             this.SidebarContainer.Size = new System.Drawing.Size(168, 450);
-            this.SidebarContainer.TabIndex = 2;
+            this.SidebarContainer.TabIndex = 3;
             // 
             // panel4
             // 
@@ -103,6 +76,46 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(168, 56);
             this.panel4.TabIndex = 3;
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel6.Controls.Add(this.CollapseLeft);
+            this.panel6.Location = new System.Drawing.Point(-4, 0);
+            this.panel6.Margin = new System.Windows.Forms.Padding(0);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(58, 56);
+            this.panel6.TabIndex = 4;
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel5.Controls.Add(this.SignOut);
+            this.panel5.Location = new System.Drawing.Point(0, 394);
+            this.panel5.Margin = new System.Windows.Forms.Padding(0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(168, 56);
+            this.panel5.TabIndex = 4;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel2.Controls.Add(this.GoDashboard);
+            this.panel2.Location = new System.Drawing.Point(0, 130);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(168, 56);
+            this.panel2.TabIndex = 0;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel3.Controls.Add(this.GoQuestions);
+            this.panel3.Location = new System.Drawing.Point(0, 186);
+            this.panel3.Margin = new System.Windows.Forms.Padding(0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(168, 56);
+            this.panel3.TabIndex = 2;
             // 
             // GoResults
             // 
@@ -119,18 +132,9 @@
             this.GoResults.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.GoResults.Size = new System.Drawing.Size(168, 56);
             this.GoResults.TabIndex = 2;
+            this.GoResults.Tag = "navButton";
             this.GoResults.Text = "Results";
             this.GoResults.UseVisualStyleBackColor = false;
-            // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.Color.SteelBlue;
-            this.panel6.Controls.Add(this.CollapseLeft);
-            this.panel6.Location = new System.Drawing.Point(-4, 0);
-            this.panel6.Margin = new System.Windows.Forms.Padding(0);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(58, 56);
-            this.panel6.TabIndex = 4;
             // 
             // CollapseLeft
             // 
@@ -148,17 +152,7 @@
             this.CollapseLeft.Size = new System.Drawing.Size(168, 56);
             this.CollapseLeft.TabIndex = 2;
             this.CollapseLeft.UseVisualStyleBackColor = false;
-            this.CollapseLeft.Click += new System.EventHandler(this.CollapseLeft_Click);
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.SteelBlue;
-            this.panel5.Controls.Add(this.SignOut);
-            this.panel5.Location = new System.Drawing.Point(0, 394);
-            this.panel5.Margin = new System.Windows.Forms.Padding(0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(168, 56);
-            this.panel5.TabIndex = 4;
+            this.CollapseLeft.Click += new System.EventHandler(this.CollapseLeft_Click_1);
             // 
             // SignOut
             // 
@@ -179,16 +173,6 @@
             this.SignOut.UseVisualStyleBackColor = false;
             this.SignOut.Click += new System.EventHandler(this.SignOut_Click);
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.SteelBlue;
-            this.panel2.Controls.Add(this.GoDashboard);
-            this.panel2.Location = new System.Drawing.Point(0, 130);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(168, 56);
-            this.panel2.TabIndex = 0;
-            // 
             // GoDashboard
             // 
             this.GoDashboard.BackColor = System.Drawing.Color.SteelBlue;
@@ -204,18 +188,9 @@
             this.GoDashboard.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.GoDashboard.Size = new System.Drawing.Size(168, 56);
             this.GoDashboard.TabIndex = 2;
+            this.GoDashboard.Tag = "navButton";
             this.GoDashboard.Text = "Dashboard";
             this.GoDashboard.UseVisualStyleBackColor = false;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.SteelBlue;
-            this.panel3.Controls.Add(this.GoQuestions);
-            this.panel3.Location = new System.Drawing.Point(0, 186);
-            this.panel3.Margin = new System.Windows.Forms.Padding(0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(168, 56);
-            this.panel3.TabIndex = 2;
             // 
             // GoQuestions
             // 
@@ -232,59 +207,40 @@
             this.GoQuestions.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.GoQuestions.Size = new System.Drawing.Size(168, 56);
             this.GoQuestions.TabIndex = 2;
+            this.GoQuestions.Tag = "navButton";
             this.GoQuestions.Text = "Questions";
             this.GoQuestions.UseVisualStyleBackColor = false;
-            // 
-            // LabelTime
-            // 
-            this.LabelTime.AutoSize = true;
-            this.LabelTime.Location = new System.Drawing.Point(87, 42);
-            this.LabelTime.Name = "LabelTime";
-            this.LabelTime.Size = new System.Drawing.Size(49, 13);
-            this.LabelTime.TabIndex = 7;
-            this.LabelTime.Text = "12:00:01";
-            // 
-            // LabelDate
-            // 
-            this.LabelDate.AutoSize = true;
-            this.LabelDate.Location = new System.Drawing.Point(18, 42);
-            this.LabelDate.Name = "LabelDate";
-            this.LabelDate.Size = new System.Drawing.Size(65, 13);
-            this.LabelDate.TabIndex = 6;
-            this.LabelDate.Text = "01/11/2025";
-            // 
-            // GreetLabel
-            // 
-            this.GreetLabel.AutoSize = true;
-            this.GreetLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GreetLabel.Location = new System.Drawing.Point(13, 13);
-            this.GreetLabel.Name = "GreetLabel";
-            this.GreetLabel.Size = new System.Drawing.Size(157, 25);
-            this.GreetLabel.TabIndex = 5;
-            this.GreetLabel.Text = "[Welcome, User]";
             // 
             // TimerControl
             // 
             this.TimerControl.Interval = 10;
-            this.TimerControl.Tick += new System.EventHandler(this.TimerControl_Tick);
+            this.TimerControl.Tick += new System.EventHandler(this.TimerControl_Tick_1);
+            // 
+            // PanelContainer
+            // 
+            this.PanelContainer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.PanelContainer.BackColor = System.Drawing.Color.White;
+            this.PanelContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PanelContainer.Location = new System.Drawing.Point(168, 0);
+            this.PanelContainer.Margin = new System.Windows.Forms.Padding(0);
+            this.PanelContainer.Name = "PanelContainer";
+            this.PanelContainer.Size = new System.Drawing.Size(632, 450);
+            this.PanelContainer.TabIndex = 4;
             // 
             // StudentDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.PanelContainer);
+            this.Controls.Add(this.SidebarContainer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "StudentDashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quizify | Dashboard";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StudentDashboard_FormClosing);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.Load += new System.EventHandler(this.StudentDashboard_Load);
             this.SidebarContainer.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
@@ -297,7 +253,6 @@
 
         #endregion
 
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel SidebarContainer;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button GoResults;
@@ -309,9 +264,7 @@
         private System.Windows.Forms.Button GoDashboard;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button GoQuestions;
-        private System.Windows.Forms.Label LabelTime;
-        private System.Windows.Forms.Label LabelDate;
-        private System.Windows.Forms.Label GreetLabel;
         private System.Windows.Forms.Timer TimerControl;
+        private System.Windows.Forms.Panel PanelContainer;
     }
 }
