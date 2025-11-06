@@ -131,7 +131,7 @@ namespace Quizfy_LKS.Student
             switch (btn.Name)
             {
                 case "GoDashboard":
-                    LoadUserControl(new DashboardUC(Authentication.UserId));
+                    LoadUserControl(new DashboardUC());
                     break;
                 case "GoQuestions":
                     LoadUserControl(new QuestionsUC());
@@ -194,6 +194,7 @@ namespace Quizfy_LKS.Student
         private void StudentDashboard_Load(object sender, EventArgs e)
         {
             SetupSidebarNav();
+            LoadUserControl(new DashboardUC());
         }
     }
 }

@@ -34,8 +34,10 @@
             this.SubjectCB = new System.Windows.Forms.ComboBox();
             this.AddQuestion = new System.Windows.Forms.Button();
             this.StudentQuestionView = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.SearchIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StudentQuestionView)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -51,7 +53,8 @@
             // SearchIcon
             // 
             this.SearchIcon.Image = ((System.Drawing.Image)(resources.GetObject("SearchIcon.Image")));
-            this.SearchIcon.Location = new System.Drawing.Point(11, 54);
+            this.SearchIcon.Location = new System.Drawing.Point(0, 0);
+            this.SearchIcon.Margin = new System.Windows.Forms.Padding(0);
             this.SearchIcon.Name = "SearchIcon";
             this.SearchIcon.Size = new System.Drawing.Size(26, 26);
             this.SearchIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -63,7 +66,8 @@
             // 
             this.SubjectCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SubjectCB.FormattingEnabled = true;
-            this.SubjectCB.Location = new System.Drawing.Point(43, 57);
+            this.SubjectCB.Location = new System.Drawing.Point(32, 2);
+            this.SubjectCB.Margin = new System.Windows.Forms.Padding(0);
             this.SubjectCB.Name = "SubjectCB";
             this.SubjectCB.Size = new System.Drawing.Size(453, 21);
             this.SubjectCB.TabIndex = 2;
@@ -77,7 +81,8 @@
             this.AddQuestion.ForeColor = System.Drawing.Color.White;
             this.AddQuestion.Image = ((System.Drawing.Image)(resources.GetObject("AddQuestion.Image")));
             this.AddQuestion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.AddQuestion.Location = new System.Drawing.Point(504, 54);
+            this.AddQuestion.Location = new System.Drawing.Point(493, 0);
+            this.AddQuestion.Margin = new System.Windows.Forms.Padding(0);
             this.AddQuestion.Name = "AddQuestion";
             this.AddQuestion.Size = new System.Drawing.Size(117, 26);
             this.AddQuestion.TabIndex = 3;
@@ -91,25 +96,38 @@
             this.StudentQuestionView.AllowUserToDeleteRows = false;
             this.StudentQuestionView.AllowUserToResizeColumns = false;
             this.StudentQuestionView.AllowUserToResizeRows = false;
+            this.StudentQuestionView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.StudentQuestionView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.StudentQuestionView.BackgroundColor = System.Drawing.Color.White;
             this.StudentQuestionView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.StudentQuestionView.Location = new System.Drawing.Point(11, 86);
             this.StudentQuestionView.Name = "StudentQuestionView";
+            this.StudentQuestionView.RowHeadersVisible = false;
             this.StudentQuestionView.Size = new System.Drawing.Size(610, 353);
             this.StudentQuestionView.TabIndex = 4;
             this.StudentQuestionView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.StudentQuestionView_CellContentClick);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.SearchIcon);
+            this.panel1.Controls.Add(this.AddQuestion);
+            this.panel1.Controls.Add(this.SubjectCB);
+            this.panel1.Location = new System.Drawing.Point(11, 54);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(610, 26);
+            this.panel1.TabIndex = 5;
             // 
             // QuestionsUC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.StudentQuestionView);
-            this.Controls.Add(this.AddQuestion);
-            this.Controls.Add(this.SubjectCB);
-            this.Controls.Add(this.SearchIcon);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.StudentQuestionView);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "QuestionsUC";
             this.Padding = new System.Windows.Forms.Padding(8);
@@ -117,6 +135,7 @@
             this.Load += new System.EventHandler(this.QuestionsUC_Load);
             ((System.ComponentModel.ISupportInitialize)(this.SearchIcon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StudentQuestionView)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,5 +148,6 @@
         private System.Windows.Forms.ComboBox SubjectCB;
         private System.Windows.Forms.Button AddQuestion;
         private System.Windows.Forms.DataGridView StudentQuestionView;
+        private System.Windows.Forms.Panel panel1;
     }
 }

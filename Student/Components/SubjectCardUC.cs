@@ -16,5 +16,12 @@ namespace Quizfy_LKS.Student.Components
         {
             InitializeComponent();
         }
+
+        public void SetData(string name, int time, int questionCount)
+        {
+            SubjectLabel.Text = name;
+            SubjectTimeLabel.Text = $"{time} min";
+            SubjectQuestCount.Text = $"{questionCount}";
+        }
     }
 }

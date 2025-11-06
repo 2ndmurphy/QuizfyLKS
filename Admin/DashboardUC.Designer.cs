@@ -42,6 +42,9 @@
             // 
             // ActivateBtn
             // 
+            this.ActivateBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ActivateBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ActivateBtn.BackColor = System.Drawing.Color.SteelBlue;
             this.ActivateBtn.Enabled = false;
             this.ActivateBtn.FlatAppearance.BorderSize = 2;
@@ -66,9 +69,18 @@
             // 
             // StudentResultView
             // 
+            this.StudentResultView.AllowUserToAddRows = false;
+            this.StudentResultView.AllowUserToDeleteRows = false;
+            this.StudentResultView.AllowUserToResizeColumns = false;
+            this.StudentResultView.AllowUserToResizeRows = false;
+            this.StudentResultView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.StudentResultView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.StudentResultView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.StudentResultView.Location = new System.Drawing.Point(14, 274);
             this.StudentResultView.Name = "StudentResultView";
+            this.StudentResultView.RowHeadersVisible = false;
+            this.StudentResultView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.StudentResultView.Size = new System.Drawing.Size(603, 157);
             this.StudentResultView.TabIndex = 15;
             this.StudentResultView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.StudentResultView_CellFormatting);
@@ -77,10 +89,16 @@
             // 
             this.StudentControlView.AllowUserToAddRows = false;
             this.StudentControlView.AllowUserToDeleteRows = false;
+            this.StudentControlView.AllowUserToResizeColumns = false;
+            this.StudentControlView.AllowUserToResizeRows = false;
+            this.StudentControlView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.StudentControlView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.StudentControlView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.StudentControlView.Location = new System.Drawing.Point(14, 96);
             this.StudentControlView.Name = "StudentControlView";
+            this.StudentControlView.RowHeadersVisible = false;
+            this.StudentControlView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.StudentControlView.Size = new System.Drawing.Size(603, 131);
             this.StudentControlView.TabIndex = 14;
             this.StudentControlView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.StudentControlView_CellClick);

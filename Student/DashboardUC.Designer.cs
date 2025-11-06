@@ -36,10 +36,12 @@
             // 
             // FlowSubjectContainer
             // 
-            this.FlowSubjectContainer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.FlowSubjectContainer.Location = new System.Drawing.Point(18, 83);
+            this.FlowSubjectContainer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.FlowSubjectContainer.AutoScroll = true;
+            this.FlowSubjectContainer.Location = new System.Drawing.Point(18, 65);
             this.FlowSubjectContainer.Name = "FlowSubjectContainer";
-            this.FlowSubjectContainer.Size = new System.Drawing.Size(592, 348);
+            this.FlowSubjectContainer.Size = new System.Drawing.Size(597, 365);
             this.FlowSubjectContainer.TabIndex = 12;
             // 
             // LabelTime
@@ -74,6 +76,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.FlowSubjectContainer);
             this.Controls.Add(this.LabelTime);
@@ -82,6 +85,7 @@
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "DashboardUC";
             this.Size = new System.Drawing.Size(632, 450);
+            this.Load += new System.EventHandler(this.DashboardUC_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
