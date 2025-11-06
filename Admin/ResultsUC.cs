@@ -51,7 +51,6 @@ namespace Quizfy_LKS.Admin
             }
         }
 
-
         private void LoadStudentResults(int subjectId, DateTime date)
         {
             using (var _db = new DataClasses1DataContext())
@@ -96,7 +95,7 @@ namespace Quizfy_LKS.Admin
         {
             if (SubjectCB.SelectedValue == null || ParticipantDate.SelectedItem == null)
             {
-                MessageBox.Show("Pilih subject dan tanggal dulu bro.");
+                MessageBox.Show("Pilih subject dan tanggal dulu.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

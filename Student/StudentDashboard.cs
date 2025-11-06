@@ -137,7 +137,7 @@ namespace Quizfy_LKS.Student
                     LoadUserControl(new QuestionsUC());
                     break;
                 case "GoResults":
-                    LoadUserControl(new ResultsUC());
+                    LoadUserControl(new ResultsUC(Authentication.UserId));
                     break;
             }
         }
