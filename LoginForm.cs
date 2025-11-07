@@ -34,20 +34,22 @@ namespace Quizfy_LKS
             if (user == null) { MessageBox.Show("User tidak ditemukan", "Login Gagal"); return; }
 
             if (!user.IsActive)
-            { MessageBox.Show("Akun tidak aktif, hubungin admin untuk mengaktifkan kembali", "Akun tidak aktif");
-                return; }
+            {
+                MessageBox.Show("Akun tidak aktif, hubungin admin untuk mengaktifkan kembali", "Akun tidak aktif");
+                return;
+            }
 
             if (user.Password == password)
             {
                 if (user.Role == '1')
                 {
-                    Authentication.SignIn(user.ID, user.FullName);
+                    Authentication.SignIn(user.ID, user.Role, user.FullName);
                     (new AdminDashboard()).Show();
                     this.Hide();
                 }
                 else
                 {
-                    Authentication.SignIn(user.ID, user.FullName);
+                    Authentication.SignIn(user.ID, user.Role, user.FullName);
                     (new StudentDashboard()).Show();
                     this.Hide();
                 }

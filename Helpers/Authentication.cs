@@ -18,11 +18,17 @@ namespace Quizfy_LKS.Helpers
     {
         private static readonly object _lock = new object();
         private static int _userId;
+        private static char? _role;
         private static string _userName;
 
-        public static int UserId 
-        { 
-            get { lock (_lock) return _userId; } 
+        public static int UserId
+        {
+            get { lock (_lock) return _userId; }
+        }
+
+        public static char? UserRole
+        {
+            get { lock (_lock) return _role; }
         }
 
         public static string UserName
@@ -38,7 +44,7 @@ namespace Quizfy_LKS.Helpers
         /// <summary>
         /// Sign the session in (store id and full name).
         /// </summary>
-        public static void SignIn(int id, string fullName)
+        public static void SignIn(int id, char role, string fullName)
         {
             if (id <= 0)
                 throw new ArgumentException("id must be positive", nameof(id));
@@ -46,6 +52,7 @@ namespace Quizfy_LKS.Helpers
             lock (_lock)
             {
                 _userId = id;
+                _role = role;
                 _userName = fullName ?? string.Empty;
             }
         }
@@ -58,6 +65,7 @@ namespace Quizfy_LKS.Helpers
             lock (_lock)
             {
                 _userId = 0;
+                _role = null;
                 _userName = null;
             }
 

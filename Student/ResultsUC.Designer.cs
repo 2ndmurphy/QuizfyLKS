@@ -44,11 +44,11 @@
             this.StudentResultView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.StudentResultView.BackgroundColor = System.Drawing.Color.White;
             this.StudentResultView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.StudentResultView.Location = new System.Drawing.Point(9, 42);
+            this.StudentResultView.Location = new System.Drawing.Point(9, 46);
             this.StudentResultView.Name = "StudentResultView";
             this.StudentResultView.RowHeadersVisible = false;
             this.StudentResultView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.StudentResultView.Size = new System.Drawing.Size(610, 353);
+            this.StudentResultView.Size = new System.Drawing.Size(610, 394);
             this.StudentResultView.TabIndex = 10;
             this.StudentResultView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.StudentResultView_CellFormatting);
             // 

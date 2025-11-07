@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.SubjectLabel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.StartQuiz = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.SubjectTimeLabel = new System.Windows.Forms.Label();
@@ -47,14 +47,15 @@
             this.SubjectLabel.TabIndex = 0;
             this.SubjectLabel.Text = "[subject label]";
             // 
-            // button1
+            // StartQuiz
             // 
-            this.button1.Location = new System.Drawing.Point(11, 100);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(192, 34);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Start";
-            this.button1.UseVisualStyleBackColor = true;
+            this.StartQuiz.Location = new System.Drawing.Point(11, 100);
+            this.StartQuiz.Name = "StartQuiz";
+            this.StartQuiz.Size = new System.Drawing.Size(192, 34);
+            this.StartQuiz.TabIndex = 1;
+            this.StartQuiz.Text = "Start";
+            this.StartQuiz.UseVisualStyleBackColor = true;
+            this.StartQuiz.Click += new System.EventHandler(this.StartQuiz_Click);
             // 
             // label2
             // 
@@ -109,7 +110,7 @@
             this.Controls.Add(this.SubjectTimeLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.StartQuiz);
             this.Controls.Add(this.SubjectLabel);
             this.Name = "SubjectCardUC";
             this.Size = new System.Drawing.Size(217, 143);
@@ -121,7 +122,7 @@
         #endregion
 
         private System.Windows.Forms.Label SubjectLabel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button StartQuiz;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label SubjectTimeLabel;

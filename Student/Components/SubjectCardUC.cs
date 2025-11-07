@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Quizfy_LKS.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,6 +23,27 @@ namespace Quizfy_LKS.Student.Components
             SubjectLabel.Text = name;
             SubjectTimeLabel.Text = $"{time} min";
             SubjectQuestCount.Text = $"{questionCount}";
+        }
+
+        private void StartQuiz_Click(object sender, EventArgs e)
+        {
+            if (Authentication.UserRole == '2')
+            {
+                DialogResult result = MessageBox.Show(
+                                        "Apakah kamu yakin ingin melanjutkan aksi ini?",
+                                        "Konfirmasi",
+                                        MessageBoxButtons.YesNo,
+                                        MessageBoxIcon.Question
+                                    );
+
+                if (result == DialogResult.No) return;
+
+                (new QuizSessionForm()).Show();
+            }
+            else
+            {
+                MessageBox.Show("Quiz hanya bisa dilakukan oleh student", "Peringatan!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

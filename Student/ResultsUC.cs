@@ -39,8 +39,8 @@ namespace Quizfy_LKS.Student
                         select new
                         {
                             Subject = s.Name,
+                            TimeTaken = TimeSpan.FromMinutes((double)p.TimeTaken),
                             p.Date,
-                            TimeTaken = TimeSpan.FromSeconds((double)p.TimeTaken),
                             Answered = answered,
                             Unanswered = Math.Max(0, totalQuestions - answered),
                             Grade = totalQuestions == 0 ? 0 :
