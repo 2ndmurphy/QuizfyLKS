@@ -1,4 +1,5 @@
-﻿using Quizfy_LKS.Student.Components;
+﻿using Quizfy_LKS.Helpers;
+using Quizfy_LKS.Student.Components;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,21 +24,38 @@ namespace Quizfy_LKS.Student
         {
             using (var _db = new DataClasses1DataContext())
             {
-                var questions = (from s in _db.Subjects
-                                 join q in _db.Questions on s.ID equals q.SubjectID into qs
-                                 select new
-                                 {
-                                     s.Name,
-                                     s.Time,
-                                     QuestionCount = qs.Count()
-                                 }).ToList();
+                var subjects = (from s in _db.Subjects
+                                join q in _db.Questions on s.ID equals q.SubjectID into qs
+                                select new
+                                {
+                                    SubjectID = s.ID,
+                                    s.Name,
+                                    s.Time,
+                                    QuestionCount = qs.Count()
+                                }).ToList();
 
                 FlowSubjectContainer.Controls.Clear();
 
-                foreach (var q in questions)
+                foreach (var subj in subjects)
                 {
-                    SubjectCardUC card = new SubjectCardUC();
-                    card.SetData(q.Name, q.Time, q.QuestionCount);
+                    var participant = _db.Participants
+                        .FirstOrDefault(p => p.UserID == Authentication.UserId && p.SubjectID == subj.SubjectID);
+
+                    if (participant == null)
+                    {
+                        participant = new Participant
+                        {
+                            UserID = Authentication.UserId,
+                            SubjectID = subj.SubjectID,
+                            Date = DateTime.Now,
+                            TimeTaken = 0
+                        };
+                        _db.Participants.InsertOnSubmit(participant);
+                        _db.SubmitChanges();
+                    }
+
+                    var card = new SubjectCardUC();
+                    card.SetData(subj.Name, subj.Time, subj.QuestionCount, subj.SubjectID, participant.ID);
                     FlowSubjectContainer.Controls.Add(card);
                 }
             }

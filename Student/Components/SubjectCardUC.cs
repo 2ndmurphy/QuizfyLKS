@@ -13,16 +13,21 @@ namespace Quizfy_LKS.Student.Components
 {
     public partial class SubjectCardUC : UserControl
     {
+        public int SubjectID { get; private set; }
+        public int ParticipantID { get; private set; }
+
         public SubjectCardUC()
         {
             InitializeComponent();
         }
 
-        public void SetData(string name, int time, int questionCount)
+        public void SetData(string name, int time, int questionCount, int subjectId, int participantId)
         {
             SubjectLabel.Text = name;
             SubjectTimeLabel.Text = $"{time} min";
             SubjectQuestCount.Text = $"{questionCount}";
+            SubjectID = subjectId;
+            ParticipantID = participantId;
         }
 
         private void StartQuiz_Click(object sender, EventArgs e)
@@ -38,7 +43,13 @@ namespace Quizfy_LKS.Student.Components
 
                 if (result == DialogResult.No) return;
 
-                (new QuizSessionForm()).Show();
+                var parentForm = this.FindForm();
+                parentForm.Hide();
+
+                // pass subjectId dan participantId ke form session
+                var quizForm = new QuizSessionForm(SubjectID, ParticipantID);
+                quizForm.FormClosed += (s, args) => parentForm.Show();
+                quizForm.Show();
             }
             else
             {

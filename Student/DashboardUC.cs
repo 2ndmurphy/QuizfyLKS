@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Quizfy_LKS.Student
 {
@@ -31,18 +32,34 @@ namespace Quizfy_LKS.Student
                                 join q in _db.Questions on s.ID equals q.SubjectID into qs
                                 select new
                                 {
+                                    SubjectID = s.ID,
                                     s.Name,
                                     s.Time,
                                     QuestionCount = qs.Count()
                                 }).ToList();
 
-                // clear flow layout sebelum bind data subjects
                 FlowSubjectContainer.Controls.Clear();
 
-                foreach (var subject in subjects)
+                foreach (var subj in subjects)
                 {
-                    SubjectCardUC card = new SubjectCardUC();
-                    card.SetData(subject.Name, subject.Time, subject.QuestionCount);
+                    var participant = _db.Participants
+                        .FirstOrDefault(p => p.UserID == _userId && p.SubjectID == subj.SubjectID);
+
+                    if (participant == null)
+                    {
+                        participant = new Participant
+                        {
+                            UserID = _userId,
+                            SubjectID = subj.SubjectID,
+                            Date = DateTime.Now,
+                            TimeTaken = 0
+                        };
+                        _db.Participants.InsertOnSubmit(participant);
+                        _db.SubmitChanges();
+                    }
+
+                    var card = new SubjectCardUC();
+                    card.SetData(subj.Name, subj.Time, subj.QuestionCount, subj.SubjectID, participant.ID);
                     FlowSubjectContainer.Controls.Add(card);
                 }
             }
