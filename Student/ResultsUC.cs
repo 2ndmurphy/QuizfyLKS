@@ -35,7 +35,7 @@ namespace Quizfy_LKS.Student
                         let correct = _db.ParticipantAnswers.Count(a => a.ParticipantID == p.ID
                                                                          && a.Answer != null && a.Answer != ""
                                                                          && a.Answer == a.Question.CorrectAnswer)
-                        // <<< hanya ambil yang memang sudah menjawab (ikut)
+                        // hanya ambil yang memang sudah menjawab (ikut)
                         where answered > 0
                         orderby p.Date descending, s.Name
                         select new

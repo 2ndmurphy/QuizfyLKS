@@ -191,6 +191,23 @@ namespace Quizfy_LKS.Student
             uc.BringToFront();
         }
 
+        public int CreateNewParticipant(int subjectId)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                var participant = new Participant
+                {
+                    UserID = Authentication.UserId,
+                    SubjectID = subjectId,
+                    Date = DateTime.Now, // penting: simpan start timestamp
+                    TimeTaken = 0
+                };
+                db.Participants.InsertOnSubmit(participant);
+                db.SubmitChanges();
+                return participant.ID;
+            }
+        }
+
         private void StudentDashboard_Load(object sender, EventArgs e)
         {
             SetupSidebarNav();

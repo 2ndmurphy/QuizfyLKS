@@ -32,17 +32,27 @@ namespace Quizfy_LKS.Student
 
         private void QuizSessionForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var confirm = MessageBox.Show(
-                    "Quiz belum selesai, apakah kamu yakin ingin keluar?",
-                    "Konfirmasi",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning
-                );
-
-            if (confirm == DialogResult.No)
+            // jika quiz belum disubmit (kita anggap participant.TimeTaken == 0 berarti belum submit)
+            using (var db = new DataClasses1DataContext())
             {
-                e.Cancel = true;
-                return;
+                var participant = db.Participants.FirstOrDefault(p => p.ID == _participantId);
+                bool isFinished = participant != null && participant.TimeTaken > 0;
+
+                if (!isFinished)
+                {
+                    var leaveConfirm = MessageBox.Show(
+                        "Sesi belum diselesaikan. Progress akan tersimpan tapi sesi dianggap incomplete. Tetap keluar?",
+                        "Konfirmasi",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
+
+                    if (leaveConfirm == DialogResult.No)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                }
             }
         }
 
@@ -131,46 +141,99 @@ namespace Quizfy_LKS.Student
 
         private void FinishQuiz()
         {
-            // Validasi dulu sebelum kirim ke DB
-            if (quizSessions.Any(q => string.IsNullOrEmpty(q.SelectedAnswer)))
+            // Hitung waktu elapsed dari participant.Date
+            DateTime startTime;
+            using (var db = new DataClasses1DataContext())
             {
-                MessageBox.Show("Masih ada soal yang belum dijawab!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                var part = db.Participants.FirstOrDefault(p => p.ID == _participantId);
+                if (part == null)
+                {
+                    MessageBox.Show("Participant session tidak ditemukan.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                startTime = part.Date;
             }
 
-            // Hitung score dulu
-            var correctCount = quizSessions.Count(q => q.SelectedAnswer == q.CorrectAnswer);
-            var score = (int)((double)correctCount / quizSessions.Count * 100);
+            var elapsed = DateTime.Now - startTime;
 
-            // Save semua ke database dalam 1 transaction
+            // 1) Cek minimal waktu 3 menit
+            if (elapsed < TimeSpan.FromMinutes(3))
+            {
+                var res = MessageBox.Show(
+                    $"Waktu pengerjaan baru {elapsed.TotalSeconds:F0} detik. Minimal waktu pengerjaan adalah 3 menit. Tetap submit sekarang?",
+                    "Waktu Belum Cukup",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+                if (res == DialogResult.No) return;
+            }
+
+            // 2) Cek unanswered
+            var unansweredCount = quizSessions.Count(q => string.IsNullOrEmpty(q.SelectedAnswer));
+            if (unansweredCount > 0)
+            {
+                var res = MessageBox.Show(
+                    $"Masih ada {unansweredCount} soal yang belum dijawab. Anda yakin ingin submit sekarang?",
+                    "Soal Belum Lengkap",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+                if (res == DialogResult.No) return;
+            }
+
+            // 3) Final confirmation
+            var finalConfirm = MessageBox.Show(
+                "Yakin ingin submit? Pastikan jawaban yang sudah anda pilih sudah benar.",
+                "Konfirmasi Submit",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+            if (finalConfirm == DialogResult.No) return;
+
+            // 4) Simpan semua jawaban + update participant (single transaction)
+            int correctCount = 0;
             using (var db = new DataClasses1DataContext())
             {
                 foreach (var q in quizSessions)
                 {
-                    var ans = db.ParticipantAnswers
+                    var existing = db.ParticipantAnswers
                         .FirstOrDefault(a => a.ParticipantID == _participantId && a.QuestionID == q.QuestionId);
 
-                    if (ans != null)
-                        ans.Answer = q.SelectedAnswer;
+                    if (existing != null)
+                    {
+                        existing.Answer = q.SelectedAnswer;
+                    }
                     else
+                    {
                         db.ParticipantAnswers.InsertOnSubmit(new ParticipantAnswer
                         {
                             ParticipantID = _participantId,
                             QuestionID = q.QuestionId,
                             Answer = q.SelectedAnswer
                         });
+                    }
+
+                    // Hitung correct (asumsi CorrectAnswer berisi teks jawaban) 
+                    if (!string.IsNullOrEmpty(q.SelectedAnswer) && q.SelectedAnswer == q.CorrectAnswer)
+                    {
+                        correctCount++;
+                    }
                 }
 
                 var participant = db.Participants.First(p => p.ID == _participantId);
                 participant.TimeTaken = (int)(DateTime.Now - participant.Date).TotalSeconds;
+                // optional: simpan score/grade jika ada kolom di Participant
+                // participant.Score = (int)((double)correctCount / quizSessions.Count * 100);
 
-                db.SubmitChanges(); // 1x submit untuk semuanya ✅
+                db.SubmitChanges();
             }
 
-            // Show result
+            var score = (int)((double)correctCount / Math.Max(1, quizSessions.Count) * 100);
+
             MessageBox.Show($"Quiz selesai!\nNilai kamu: {score}", "Selesai", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
+
 
         private void QuizSessionForm_Load(object sender, EventArgs e)
         {

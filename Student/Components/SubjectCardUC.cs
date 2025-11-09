@@ -14,47 +14,52 @@ namespace Quizfy_LKS.Student.Components
     public partial class SubjectCardUC : UserControl
     {
         public int SubjectID { get; private set; }
-        public int ParticipantID { get; private set; }
 
         public SubjectCardUC()
         {
             InitializeComponent();
         }
 
-        public void SetData(string name, int time, int questionCount, int subjectId, int participantId)
+        public void SetData(string name, int time, int questionCount, int subjectId)
         {
             SubjectLabel.Text = name;
             SubjectTimeLabel.Text = $"{time} min";
             SubjectQuestCount.Text = $"{questionCount}";
             SubjectID = subjectId;
-            ParticipantID = participantId;
         }
 
         private void StartQuiz_Click(object sender, EventArgs e)
         {
-            if (Authentication.UserRole == '2')
+            if (Authentication.UserRole != '2')
             {
-                DialogResult result = MessageBox.Show(
-                                        "Apakah kamu yakin ingin melanjutkan aksi ini?",
-                                        "Konfirmasi",
-                                        MessageBoxButtons.YesNo,
-                                        MessageBoxIcon.Question
-                                    );
-
-                if (result == DialogResult.No) return;
-
-                var parentForm = this.FindForm();
-                parentForm.Hide();
-
-                // pass subjectId dan participantId ke form session
-                var quizForm = new QuizSessionForm(SubjectID, ParticipantID);
-                quizForm.FormClosed += (s, args) => parentForm.Show();
-                quizForm.Show();
+                MessageBox.Show("Quiz hanya bisa dilakukan oleh student.", "Peringatan!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            else
+
+            var confirm = MessageBox.Show(
+                "Apakah kamu yakin ingin melanjutkan aksi ini?",
+                "Konfirmasi",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (confirm == DialogResult.No) return;
+
+            // ganti dengan nama Form utama
+            if (!(this.FindForm() is StudentDashboard parentForm))
             {
-                MessageBox.Show("Quiz hanya bisa dilakukan oleh student", "Peringatan!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Parent form tidak ditemukan.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+
+            // create a fresh participant for this attempt
+            int participantId = parentForm.CreateNewParticipant(SubjectID);
+
+            parentForm.Hide();
+
+            var quizForm = new QuizSessionForm(SubjectID, participantId);
+            quizForm.FormClosed += (s, args) => parentForm.Show();
+            quizForm.Show();
         }
     }
 }
