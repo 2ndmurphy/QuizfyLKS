@@ -37,25 +37,25 @@
             this.PrevBtn = new System.Windows.Forms.Button();
             this.NextBtn = new System.Windows.Forms.Button();
             this.QuestionContainer = new System.Windows.Forms.Panel();
-            this.rbA = new System.Windows.Forms.RadioButton();
+            this.panel5 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.rbB = new System.Windows.Forms.RadioButton();
+            this.rbA = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
-            this.rbC = new System.Windows.Forms.RadioButton();
+            this.rbB = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
-            this.rbD = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
+            this.rbD = new System.Windows.Forms.RadioButton();
+            this.rbC = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.QuestionImg = new System.Windows.Forms.PictureBox();
             this.QuestionLbl = new System.Windows.Forms.Label();
             this.LblQuestionNumber = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
             this.PanelTopBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.PanelBottomBar.SuspendLayout();
             this.QuestionContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.QuestionImg)).BeginInit();
             this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.QuestionImg)).BeginInit();
             this.SuspendLayout();
             // 
             // PanelTopBar
@@ -75,7 +75,7 @@
             // 
             this.TimeLabel.AutoSize = true;
             this.TimeLabel.Font = new System.Drawing.Font("Yu Gothic UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TimeLabel.Location = new System.Drawing.Point(459, 17);
+            this.TimeLabel.Location = new System.Drawing.Point(463, 17);
             this.TimeLabel.Name = "TimeLabel";
             this.TimeLabel.Size = new System.Drawing.Size(95, 30);
             this.TimeLabel.TabIndex = 2;
@@ -155,6 +155,30 @@
             this.QuestionContainer.Size = new System.Drawing.Size(588, 317);
             this.QuestionContainer.TabIndex = 3;
             // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.label2);
+            this.panel5.Controls.Add(this.rbA);
+            this.panel5.Controls.Add(this.label4);
+            this.panel5.Controls.Add(this.rbB);
+            this.panel5.Controls.Add(this.label3);
+            this.panel5.Controls.Add(this.label5);
+            this.panel5.Controls.Add(this.rbD);
+            this.panel5.Controls.Add(this.rbC);
+            this.panel5.Location = new System.Drawing.Point(25, 183);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(536, 122);
+            this.panel5.TabIndex = 12;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(4, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(17, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "A.";
+            // 
             // rbA
             // 
             this.rbA.AutoSize = true;
@@ -166,14 +190,14 @@
             this.rbA.Text = "radioButton1";
             this.rbA.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // label4
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(17, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "A.";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(5, 24);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(17, 13);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "B.";
             // 
             // rbB
             // 
@@ -186,26 +210,6 @@
             this.rbB.Text = "radioButton2";
             this.rbB.UseVisualStyleBackColor = true;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(5, 24);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(17, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "B.";
-            // 
-            // rbC
-            // 
-            this.rbC.AutoSize = true;
-            this.rbC.Location = new System.Drawing.Point(23, 40);
-            this.rbC.Name = "rbC";
-            this.rbC.Size = new System.Drawing.Size(85, 17);
-            this.rbC.TabIndex = 0;
-            this.rbC.TabStop = true;
-            this.rbC.Text = "radioButton3";
-            this.rbC.UseVisualStyleBackColor = true;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -214,6 +218,15 @@
             this.label3.Size = new System.Drawing.Size(17, 13);
             this.label3.TabIndex = 5;
             this.label3.Text = "C.";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(4, 60);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(18, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "D.";
             // 
             // rbD
             // 
@@ -226,14 +239,16 @@
             this.rbD.Text = "radioButton4";
             this.rbD.UseVisualStyleBackColor = true;
             // 
-            // label5
+            // rbC
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 60);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(18, 13);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "D.";
+            this.rbC.AutoSize = true;
+            this.rbC.Location = new System.Drawing.Point(23, 40);
+            this.rbC.Name = "rbC";
+            this.rbC.Size = new System.Drawing.Size(85, 17);
+            this.rbC.TabIndex = 0;
+            this.rbC.TabStop = true;
+            this.rbC.Text = "radioButton3";
+            this.rbC.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -271,21 +286,6 @@
             this.LblQuestionNumber.TabIndex = 0;
             this.LblQuestionNumber.Text = "Question #1";
             // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.label2);
-            this.panel5.Controls.Add(this.rbA);
-            this.panel5.Controls.Add(this.label4);
-            this.panel5.Controls.Add(this.rbB);
-            this.panel5.Controls.Add(this.label3);
-            this.panel5.Controls.Add(this.label5);
-            this.panel5.Controls.Add(this.rbD);
-            this.panel5.Controls.Add(this.rbC);
-            this.panel5.Location = new System.Drawing.Point(25, 183);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(536, 122);
-            this.panel5.TabIndex = 12;
-            // 
             // QuizSessionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -302,6 +302,7 @@
             this.Tag = "QuestForm";
             this.Text = "Quizify | Quiz Session";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.QuizSessionForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.QuizSessionForm_FormClosed);
             this.Load += new System.EventHandler(this.QuizSessionForm_Load);
             this.PanelTopBar.ResumeLayout(false);
             this.PanelTopBar.PerformLayout();
@@ -309,9 +310,9 @@
             this.PanelBottomBar.ResumeLayout(false);
             this.QuestionContainer.ResumeLayout(false);
             this.QuestionContainer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.QuestionImg)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.QuestionImg)).EndInit();
             this.ResumeLayout(false);
 
         }

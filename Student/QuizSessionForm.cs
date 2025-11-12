@@ -15,11 +15,16 @@ namespace Quizfy_LKS.Student
     public partial class QuizSessionForm : Form
     {
         private List<QuizSession> quizSessions;
-
         private int currentIndex = 0;
 
         private int _subjectId;
         private int _participantId;
+
+        // timer fields
+        private Timer _countdownTimer;
+        private DateTime _endTime;
+        private TimeSpan _duration; // duration loaded from Subject.Time (in hours)
+        private bool _isFinished = false; // set true when finish was completed (manual or auto)
 
         public QuizSessionForm(int subjectId, int participantId)
         {
@@ -32,29 +37,184 @@ namespace Quizfy_LKS.Student
 
         private void QuizSessionForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // jika quiz belum disubmit (kita anggap participant.TimeTaken == 0 berarti belum submit)
-            using (var db = new DataClasses1DataContext())
+            // if not finished, confirm leaving (but do not show "this form cannot be closed" hard block)
+            if (!_isFinished)
             {
-                var participant = db.Participants.FirstOrDefault(p => p.ID == _participantId);
-                bool isFinished = participant != null && participant.TimeTaken > 0;
-
-                if (!isFinished)
+                var res = MessageBox.Show(
+                    "Sesi belum diselesaikan. Progress tersimpan, tetapi sesi dianggap incomplete. Tetap keluar?",
+                    "Konfirmasi",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+                if (res == DialogResult.No)
                 {
-                    var leaveConfirm = MessageBox.Show(
-                        "Sesi belum diselesaikan. Progress akan tersimpan tapi sesi dianggap incomplete. Tetap keluar?",
-                        "Konfirmasi",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Warning
-                    );
-
-                    if (leaveConfirm == DialogResult.No)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
+                    e.Cancel = true;
+                    return;
                 }
             }
+
+            // cleanup timer to avoid leaks
+            try
+            {
+                if (_countdownTimer != null)
+                {
+                    _countdownTimer.Stop();
+                    _countdownTimer.Tick -= CountDownTimer_Tick;
+                    _countdownTimer.Dispose();
+                    _countdownTimer = null;
+                }
+            }
+            catch { }
         }
+
+        private void QuizSessionForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            quizSessions?.Clear();
+            quizSessions = null;
+            GC.Collect();
+        }
+
+        #region Quiz Timer State
+
+        private void LoadDurationAndStartTime()
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                var subject = db.Subjects.FirstOrDefault(s => s.ID == _subjectId);
+                if (subject == null)
+                {
+                    MessageBox.Show("Subject tidak ditemukan.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+
+                // assume subject.Time is number of hours (e.g., 1 = 1 hour)
+                double hours = 0;
+                try
+                {
+                    hours = Convert.ToDouble(subject.Time);
+                }
+                catch
+                {
+                    hours = 0;
+                }
+
+                _duration = TimeSpan.FromHours(hours);
+
+                var participant = db.Participants.FirstOrDefault(p => p.ID == _participantId);
+                if (participant == null)
+                {
+                    MessageBox.Show("Participant session tidak ditemukan.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+
+                // start time is participant.Date (which should be set by parent when creating participant)
+                DateTime startTime = participant.Date;
+                _endTime = startTime.Add(_duration);
+            }
+
+            // init UI timer
+            _countdownTimer = new Timer { Interval = 1000 };
+            _countdownTimer.Tick += CountDownTimer_Tick;
+            _countdownTimer.Start();
+
+            // initial display
+            UpdateTimerLabel();
+        }
+
+        private void CountDownTimer_Tick(object sender, EventArgs e)
+        {
+            UpdateTimerLabel();
+
+            var remaining = _endTime - DateTime.Now;
+            if (remaining <= TimeSpan.Zero)
+            {
+                _countdownTimer.Stop();
+                // Auto-submit without confirmations
+                OnTimeExpiredAutoSubmit();
+            }
+        }
+
+        private void UpdateTimerLabel()
+        {
+            var remaining = _endTime - DateTime.Now;
+            if (remaining < TimeSpan.Zero) remaining = TimeSpan.Zero;
+
+            // show as HH:mm:ss (if long duration), else mm:ss
+            string text;
+            if (remaining.TotalHours >= 1)
+                text = string.Format("{0:D2}:{1:D2}:{2:D2}", (int)remaining.TotalHours, remaining.Minutes, remaining.Seconds);
+            else
+                text = string.Format("{0:D2}:{1:D2}", remaining.Minutes, remaining.Seconds);
+
+            TimeLabel.Text = text; // pastikan ada label lblTimer di form
+        }
+
+        private void OnTimeExpiredAutoSubmit()
+        {
+            // mark as auto-finished to bypass confirmation logic
+            _isFinished = true;
+
+            // Save answers & update participant.TimeTaken using duration (or elapsed)
+            AutoSaveAndFinish();
+
+            MessageBox.Show("Waktu habis! Jawaban disubmit otomatis.", "Waktu Habis", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
+        }
+
+        private void AutoSaveAndFinish()
+        {
+            int correctCount = 0;
+            using (var db = new DataClasses1DataContext())
+            {
+                foreach (var q in quizSessions)
+                {
+                    var existing = db.ParticipantAnswers
+                        .FirstOrDefault(a => a.ParticipantID == _participantId && a.QuestionID == q.QuestionId);
+
+                    if (existing != null)
+                    {
+                        existing.Answer = q.SelectedAnswer; // may be null
+                    }
+                    else
+                    {
+                        db.ParticipantAnswers.InsertOnSubmit(new ParticipantAnswer
+                        {
+                            ParticipantID = _participantId,
+                            QuestionID = q.QuestionId,
+                            Answer = q.SelectedAnswer
+                        });
+                    }
+
+                    // assuming CorrectAnswer stores the answer text
+                    if (!string.IsNullOrEmpty(q.SelectedAnswer) && q.SelectedAnswer == q.CorrectAnswer)
+                        correctCount++;
+                }
+
+                var participant = db.Participants.First(p => p.ID == _participantId);
+
+                // compute TimeTaken: if endTime passed, prefer full duration; else compute elapsed
+                var elapsed = DateTime.Now - participant.Date;
+                int timeTakenSeconds;
+                if (elapsed >= _duration)
+                    timeTakenSeconds = (int)_duration.TotalSeconds;
+                else
+                    timeTakenSeconds = (int)elapsed.TotalSeconds;
+
+                participant.TimeTaken = timeTakenSeconds;
+
+                // optional: store score/grade if Participant has columns for it
+                // participant.Score = (int)((double)correctCount / Math.Max(1, quizSessions.Count) * 100);
+
+                db.SubmitChanges();
+            }
+        }
+
+        #endregion End Quiz Timer State
+
+
+        #region Quiz Session State
 
         private void LoadQuestions()
         {
@@ -141,7 +301,10 @@ namespace Quizfy_LKS.Student
 
         private void FinishQuiz()
         {
-            // Hitung waktu elapsed dari participant.Date
+            // if already auto-submitted by timer, ignore manual finish
+            if (_isFinished) return;
+
+            // compute elapsed from participant start
             DateTime startTime;
             using (var db = new DataClasses1DataContext())
             {
@@ -156,7 +319,7 @@ namespace Quizfy_LKS.Student
 
             var elapsed = DateTime.Now - startTime;
 
-            // 1) Cek minimal waktu 3 menit
+            // 1) minimal 3 menit check
             if (elapsed < TimeSpan.FromMinutes(3))
             {
                 var res = MessageBox.Show(
@@ -168,7 +331,7 @@ namespace Quizfy_LKS.Student
                 if (res == DialogResult.No) return;
             }
 
-            // 2) Cek unanswered
+            // 2) unanswered check
             var unansweredCount = quizSessions.Count(q => string.IsNullOrEmpty(q.SelectedAnswer));
             if (unansweredCount > 0)
             {
@@ -181,7 +344,7 @@ namespace Quizfy_LKS.Student
                 if (res == DialogResult.No) return;
             }
 
-            // 3) Final confirmation
+            // 3) final confirm
             var finalConfirm = MessageBox.Show(
                 "Yakin ingin submit? Pastikan jawaban yang sudah anda pilih sudah benar.",
                 "Konfirmasi Submit",
@@ -190,7 +353,7 @@ namespace Quizfy_LKS.Student
             );
             if (finalConfirm == DialogResult.No) return;
 
-            // 4) Simpan semua jawaban + update participant (single transaction)
+            // 4) save answers + update participant (single transaction)
             int correctCount = 0;
             using (var db = new DataClasses1DataContext())
             {
@@ -213,31 +376,30 @@ namespace Quizfy_LKS.Student
                         });
                     }
 
-                    // Hitung correct (asumsi CorrectAnswer berisi teks jawaban) 
                     if (!string.IsNullOrEmpty(q.SelectedAnswer) && q.SelectedAnswer == q.CorrectAnswer)
-                    {
                         correctCount++;
-                    }
                 }
 
                 var participant = db.Participants.First(p => p.ID == _participantId);
                 participant.TimeTaken = (int)(DateTime.Now - participant.Date).TotalSeconds;
-                // optional: simpan score/grade jika ada kolom di Participant
-                // participant.Score = (int)((double)correctCount / quizSessions.Count * 100);
-
+                // optional: participant.Score = (int)((double)correctCount / Math.Max(1, quizSessions.Count) * 100);
                 db.SubmitChanges();
             }
 
+            _isFinished = true;
             var score = (int)((double)correctCount / Math.Max(1, quizSessions.Count) * 100);
-
             MessageBox.Show($"Quiz selesai!\nNilai kamu: {score}", "Selesai", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             this.Close();
         }
 
+        #endregion End Quiz Session State
 
         private void QuizSessionForm_Load(object sender, EventArgs e)
         {
+            LoadDurationAndStartTime();
             LoadQuestions();
+
             if (quizSessions.Any())
                 ShowQuestion(0);
 
