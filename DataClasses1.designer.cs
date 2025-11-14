@@ -48,7 +48,7 @@ namespace Quizfy_LKS
     #endregion
 		
 		public DataClasses1DataContext() : 
-				base(global::Quizfy_LKS.Properties.Settings.Default.Quizify_DBConnectionString, mappingSource)
+				base(global::Quizfy_LKS.Properties.Settings.Default.Quizify_DBConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}

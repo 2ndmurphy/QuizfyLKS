@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Quizify_DB" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=MURPHY\SQLEXPRESS;Initial Catalog=Quizify_DB;Integrated Security=True;Trust Server Certificate=True" SettingsObjectName="Quizfy_LKS.Properties.Settings" SettingsPropertyName="Quizify_DBConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=Quizify_DB;Integrated Security=True;Trust Server Certificate=True" SettingsObjectName="Quizfy_LKS.Properties.Settings" SettingsPropertyName="Quizify_DBConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Participant" Member="Participants">
     <Type Name="Participant">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
